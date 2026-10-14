@@ -115,3 +115,27 @@ body{font-size:15px}
 :root[data-theme="light"] .hero-art.branded-orbit .logo-for-light{display:block!important}
 :root[data-theme="dark"] .hero-art.branded-orbit .logo-for-light{display:none!important}
 :root[data-theme="dark"] .hero-art.branded-orbit .logo-for-dark{display:block!important}
+
+/* 2026-10-14 legibility and original-artwork presentation repair */
+:root[data-theme="light"]{--paper:#f5f2eb;--cream:#f2efe8;--muted:#40515a}
+:root[data-theme="light"] .hero{background:#f5f2eb}
+:root[data-theme="light"] .site-header{background:#f5f2eb}
+.hero-art.branded-orbit{max-width:400px!important;gap:12px!important;border-radius:0!important;box-shadow:none!important;padding:0!important}
+.hero-logo-link{display:block!important;max-width:340px!important;width:100%!important;border-radius:0!important;overflow:visible!important;background:none!important;box-shadow:none!important}
+.hero-logo-link img{width:100%!important;height:auto!important;max-height:390px;object-fit:contain;border-radius:0!important}
+:root[data-theme="light"] .hero-art.branded-orbit{background:none!important}
+:root[data-theme="light"] .hero-art.branded-orbit .logo-for-light{display:block!important}
+:root[data-theme="light"] .hero-art.branded-orbit .logo-for-dark{display:none!important}
+.branded-orbit .orbit-action{background:#142a33!important;color:#ffffff!important;border:1px solid #142a33!important;border-radius:4px!important;min-width:0!important;font-size:13px!important;font-weight:800!important;letter-spacing:.35px!important;padding:12px 10px!important;line-height:1.2!important;text-shadow:none!important}
+.branded-orbit .orbit-action:hover,.branded-orbit .orbit-action:focus-visible{background:#324b56!important;color:#fff!important}
+:root[data-theme="dark"] .branded-orbit .orbit-action{background:#d5a75a!important;color:#10242c!important;border-color:#d5a75a!important}
+:root[data-theme="dark"] .branded-orbit .orbit-action:hover{background:#f1c77f!important;color:#10242c!important}
+.eyebrow{font-size:13px!important;letter-spacing:1.3px!important}
+.hero-note{font-size:14px!important;color:var(--muted)!important}
+.hero-lede{font-size:17px!important;line-height:1.65!important;color:var(--muted)!important}
+.nav{font-size:14px!important}
+.brand-text small{font-size:11px!important}
+.principle p,.community-grid p:not(.eyebrow),.approach-grid p,.section-heading>p,.connect p:not(.eyebrow){font-size:16px!important;line-height:1.65!important}
+.community-grid .small-note{font-size:14px!important}
+.footer-right{font-size:13px!important}
+@media(max-width:700px){.hero-art.branded-orbit{max-width:330px!important}.hero-logo-link{max-width:290px!important}.branded-orbit .orbit-action{font-size:12px!important}.nav{font-size:14px!important}}
