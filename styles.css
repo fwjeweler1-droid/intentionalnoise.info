@@ -104,3 +104,16 @@ body{font-size:15px}
 @media(max-width:900px){.hero-grid{grid-template-columns:1fr;min-height:0}.hero-content{padding:70px 0 10px}.hero-art.branded-orbit{max-width:460px;width:100%;margin:0 auto 50px;padding:0;min-height:0}.community-grid,.approach-grid{gap:35px}}
 @media(max-width:700px){.header-inner{min-height:76px}.brand-logo{width:48px;height:48px}.nav{gap:16px;font-size:13px}.hero-content{padding:55px 0 12px}.hero h1{font-size:clamp(38px,10vw,55px);letter-spacing:-2px}.hero-lede{font-size:15px}.hero-art.branded-orbit{max-width:340px;margin:0 auto 45px;gap:9px}.hero-logo-link,:root[data-theme="light"] .hero-logo-link{width:min(100%,280px)}.branded-orbit .orbit-action{font-size:9px;padding:10px 5px;letter-spacing:0}.section{padding:65px 0}.statement{padding:62px 0}.principle,.info-card{padding:25px}.page-hero{padding:60px 0}.page-section{padding:52px 0 70px}.connect-inner{display:block}.footer-inner{gap:18px}}
 @media(max-width:370px){.branded-orbit .orbit-action{font-size:8px}}
+
+
+/* Brand presentation: dark charcoal logo stage, warmer light canvas */
+:root[data-theme="light"]{--bg:#f2efe8}
+:root[data-theme="light"] body{background:#f2efe8}
+.hero-art.branded-orbit{background:#151718;border:1px solid rgba(194,158,85,.22);border-radius:18px;padding:30px 24px 25px;box-shadow:0 20px 50px rgba(25,23,18,.14)}
+.hero-art.branded-orbit .hero-logo-link{background:transparent!important;box-shadow:none!important}
+.hero-art.branded-orbit .logo-for-dark{mix-blend-mode:screen}
+:root[data-theme="dark"] .hero-art.branded-orbit{background:#101214;border-color:rgba(194,158,85,.25)}
+:root[data-theme="light"] .hero-art.branded-orbit .logo-for-dark{display:block!important}
+:root[data-theme="light"] .hero-art.branded-orbit .logo-for-light{display:none!important}
+:root[data-theme="light"] .hero-art.branded-orbit .orbit-action{color:#e9e3d4;border-color:rgba(220,193,134,.35)}
+@media(max-width:700px){.hero-art.branded-orbit{padding:18px 12px 17px}}
