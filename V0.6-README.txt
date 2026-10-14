@@ -1,0 +1,15 @@
+INTENTIONALNOISE.INFO — v0.6
+
+Changes:
+- Official Intentional Noise LLC gold/silver logos (dark and light variants).
+- Clickable logo links home.
+- CREATE -> community.html; CONNECT -> lounge.html; SUCCEED -> services.html.
+- Lounge navigation on all pages.
+- Existing dark/light mode, pages, and contact-form disabled state retained.
+
+Upload the CONTENTS of this folder to your GitHub repository root, replacing matching files.
+GitHub Pages should redeploy from main automatically.
+Do not upload the ZIP as a file. Leave the existing README.md unchanged.
+
+NOTE: Contact forms still need a secure backend; lounge services remain experimental.
+No DNS changes are required.
