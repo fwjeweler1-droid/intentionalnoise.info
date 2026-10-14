@@ -1,0 +1,26 @@
+INTENTIONALNOISE.INFO — WEBSITE DRAFT V0.1
+
+This ZIP contains:
+- index.html
+- styles.css
+- script.js
+- assets/favicon.svg
+
+IMPORTANT: This is a draft for review. No GitHub repository files were changed.
+Do not delete or replace the existing README.md.
+
+UPLOAD TO GITHUB
+1. Open the existing fwjeweler1-droid/intentionalnoise.info repository.
+2. Select Add file > Upload files.
+3. Upload index.html, styles.css, script.js, and the assets folder's favicon.svg (preserving the assets/ path).
+4. Commit changes to main when ready.
+5. In Settings > Pages, select Deploy from a branch, main, /(root), then Save (if Pages is available for the repository and plan).
+6. Preview the GitHub Pages URL before connecting the custom domain intentionalnoise.info.
+
+Notes:
+- The site is static and uses no paid frameworks, analytics, cookies, or back-end services.
+- Google Fonts are optional external font requests; local fallback fonts are provided.
+- Community offerings are described as in development, not currently available.
+- The site has no invented contact address or signup service.
+- The temporary IN monogram is a design placeholder, not approved brand artwork.
+- Links to intentionalnoise.com assume that domain will eventually have its own site.
