@@ -34,3 +34,8 @@ intentionalnoise.info is the clean, professional business and free creator-commu
 
 ## Writeback accountability
 This is a historical/checkpoint document, not proof that all pending work is complete. The owner's last direction before this record was to leave the live website alone. Recording this checkpoint does not authorize further website changes.
+
+## Owner policy addition — third-party communications and verification (2026-10-14)
+Owner's core reasoning: use independent third-party services for member communication and verification to pursue a *virtually trustless* community architecture. The site operator should not become custodian or broker of member conversations or personal data; members should control their information. Proposed guiding line: "The community is not the product. Neither is your information."
+
+**Important implementation and legal qualification:** This is a design goal and policy direction, not a verified statement of the current technical implementation. Avoid categorical public claims such as "we never hold any data" until hosting logs, analytics, form submissions, authentication, service integrations, and legal obligations have been audited. Third-party providers may collect, retain, process, or disclose data under their own terms. Distinguish site-operator practices from provider practices; minimize first-party collection, disclose providers, and provide clear user choice. Do not publish this language or change the live site until owner approves the final privacy wording.
