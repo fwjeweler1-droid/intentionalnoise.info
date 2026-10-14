@@ -27,3 +27,9 @@
 :root[data-theme="dark"] .menu-toggle span{background:var(--ink)}
 :root[data-theme="dark"] .skip{background:#17252a}
 @media(max-width:700px){.theme-toggle{margin-left:auto;padding:8px}.theme-label{display:none}.header-inner{gap:9px}}
+
+/* v0.4 forms */
+.contact-form{display:grid;gap:17px;margin-top:20px}.contact-form label{display:grid;gap:6px;font-size:13px;font-weight:700}.contact-form input:not([type=checkbox]),.contact-form textarea,.contact-form select{width:100%;padding:12px;border:1px solid var(--line);border-radius:4px;background:var(--cream);color:var(--ink);font:inherit}.contact-form .consent{display:flex;align-items:flex-start;gap:10px;font-weight:500;line-height:1.5}.contact-form .consent input{margin-top:5px;accent-color:var(--accent)}.contact-form a,.privacy-copy a{text-decoration:underline;text-underline-offset:3px}.form-status{font-size:13px;color:var(--muted);margin:0}.honeypot{position:absolute;left:-9999px}.privacy-copy{max-width:800px}.privacy-copy h2{font-size:24px;letter-spacing:-.5px;margin-top:34px}.privacy-copy p{color:var(--muted)}
+
+/* v0.5 community lounge */
+.lounge-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.lounge-panel{display:flex;flex-direction:column;align-items:flex-start;gap:14px}.lounge-panel h2{margin:0}.lounge-panel p{margin:0}.lounge-panel label{font-size:13px;font-weight:700}.lounge-panel input{padding:12px;border:1px solid var(--line);border-radius:4px;background:var(--cream);color:var(--ink);width:min(100%,330px);font:inherit}.lounge-rules{margin-top:20px}.lounge-rules p{margin-top:12px}.lounge-rules a{text-decoration:underline}@media(max-width:700px){.lounge-grid{grid-template-columns:1fr}}
