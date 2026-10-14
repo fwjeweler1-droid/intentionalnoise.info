@@ -106,14 +106,12 @@ body{font-size:15px}
 @media(max-width:370px){.branded-orbit .orbit-action{font-size:8px}}
 
 
-/* Brand presentation: dark charcoal logo stage, warmer light canvas */
+
+/* Approved theme-specific branding: solid black original on light, transparent on dark */
 :root[data-theme="light"]{--bg:#f2efe8}
 :root[data-theme="light"] body{background:#f2efe8}
-.hero-art.branded-orbit{background:#151718;border:1px solid rgba(194,158,85,.22);border-radius:18px;padding:30px 24px 25px;box-shadow:0 20px 50px rgba(25,23,18,.14)}
-.hero-art.branded-orbit .hero-logo-link{background:transparent!important;box-shadow:none!important}
-.hero-art.branded-orbit .logo-for-dark{mix-blend-mode:screen}
-:root[data-theme="dark"] .hero-art.branded-orbit{background:#101214;border-color:rgba(194,158,85,.25)}
-:root[data-theme="light"] .hero-art.branded-orbit .logo-for-dark{display:block!important}
-:root[data-theme="light"] .hero-art.branded-orbit .logo-for-light{display:none!important}
-:root[data-theme="light"] .hero-art.branded-orbit .orbit-action{color:#e9e3d4;border-color:rgba(220,193,134,.35)}
-@media(max-width:700px){.hero-art.branded-orbit{padding:18px 12px 17px}}
+:root[data-theme="light"] .hero-art.branded-orbit{background:transparent;border:0;box-shadow:none;padding:0}
+:root[data-theme="light"] .hero-art.branded-orbit .logo-for-dark{display:none!important}
+:root[data-theme="light"] .hero-art.branded-orbit .logo-for-light{display:block!important}
+:root[data-theme="dark"] .hero-art.branded-orbit .logo-for-light{display:none!important}
+:root[data-theme="dark"] .hero-art.branded-orbit .logo-for-dark{display:block!important}
