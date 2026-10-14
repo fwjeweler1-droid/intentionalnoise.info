@@ -14,3 +14,8 @@ if (menuButton && nav) {
 }
 const year = document.querySelector('#year');
 if (year) year.textContent = String(new Date().getFullYear());
+
+const themeButton=document.querySelector('.theme-toggle');
+function syncThemeButton(){if(!themeButton)return;const dark=document.documentElement.dataset.theme==='dark';themeButton.querySelector('.theme-symbol').textContent=dark?'☀':'☾';themeButton.querySelector('.theme-label').textContent=dark?'Light':'Dark';themeButton.setAttribute('aria-label',dark?'Switch to light theme':'Switch to dark theme');}
+syncThemeButton();
+if(themeButton)themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('in-theme',next)}catch(e){}syncThemeButton();});

@@ -1,0 +1,9 @@
+VERSION 0.3 — DARK/LIGHT THEME
+
+Upload the contents of this folder to the ROOT of your existing intentionalnoise.info GitHub repository on main. Replace matching files. Keep README.md and any unrelated files.
+
+This includes all six HTML pages, styles.css, script.js, and assets/favicon.svg.
+
+Dark is the default. The sun/moon button switches themes; preference is saved in the visitor’s browser. No DNS changes are required.
+
+After GitHub Pages deploys, refresh the website (hard refresh if CSS is cached). Check the toggle on desktop and mobile.
