@@ -139,3 +139,6 @@ body{font-size:15px}
 .community-grid .small-note{font-size:14px!important}
 .footer-right{font-size:13px!important}
 @media(max-width:700px){.hero-art.branded-orbit{max-width:330px!important}.hero-logo-link{max-width:290px!important}.branded-orbit .orbit-action{font-size:12px!important}.nav{font-size:14px!important}}
+
+/* Navigation buttons */
+.nav{gap:8px;flex-wrap:wrap}.nav>a{padding:9px 11px;border:1px solid var(--line);border-radius:6px}.nav>a:hover,.nav>a[aria-current="page"]{border-color:var(--accent)}
