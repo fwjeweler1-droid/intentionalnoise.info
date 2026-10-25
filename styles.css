@@ -149,7 +149,7 @@ body{font-size:15px}
 .nav a[aria-current="page"]:not(.nav-cta){border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
 .nav .nav-cta{position:relative;overflow:hidden;isolation:isolate;background:#182c34;color:#fff;border-color:#58636a}
 .nav .nav-cta::after{content:"";position:absolute;inset:-40% auto -40% -65%;width:32%;transform:skewX(-25deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.05),rgba(255,255,255,.32),rgba(255,255,255,.05),transparent);pointer-events:none;animation:amp-glint 8s ease-in-out 3;animation-fill-mode:forwards}
-@keyframes amp-glint{0%,88%{left:-65%;opacity:0}89%{opacity:1}98%{left:135%;opacity:1}100%{left:135%;opacity:0}}
+@keyframes amp-glint{0%,89%{left:-65%;opacity:0}90%{left:-65%;opacity:1}99%{left:135%;opacity:1}100%{left:135%;opacity:0}}
 :root[data-theme="dark"] .nav .nav-cta{background:#d5a75a;color:#101a1e;border-color:#d5a75a}
 :root[data-theme="dark"] .nav .nav-cta::after{background:linear-gradient(90deg,transparent,rgba(255,255,255,.05),rgba(255,255,255,.48),transparent)}
 .amp-ribbon{padding:20px 16px;text-align:center;letter-spacing:.23em;font-size:clamp(10px,1.25vw,14px);font-weight:700;color:var(--ink);border-block:1px solid var(--line);background:repeating-linear-gradient(35deg,transparent 0 3px,rgba(128,108,72,.07) 3px 4px),repeating-linear-gradient(145deg,transparent 0 4px,rgba(128,108,72,.06) 4px 5px),var(--paper)}
