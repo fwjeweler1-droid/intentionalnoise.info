@@ -142,3 +142,17 @@ body{font-size:15px}
 
 /* Navigation buttons */
 .nav{gap:8px;flex-wrap:wrap}.nav>a{padding:9px 11px;border:1px solid var(--line);border-radius:6px}.nav>a:hover,.nav>a[aria-current="page"]{border-color:var(--accent)}
+
+/* October 2026: restrained navigation and amplifier ribbon */
+.nav a{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:8px 12px;border:1px solid var(--line);border-radius:6px;transition:border-color .2s,background-color .2s,color .2s}
+.nav a:hover{border-color:var(--accent)}
+.nav a[aria-current="page"]:not(.nav-cta){border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.nav .nav-cta{position:relative;overflow:hidden;isolation:isolate;background:#182c34;color:#fff;border-color:#58636a}
+.nav .nav-cta::after{content:"";position:absolute;inset:-40% auto -40% -65%;width:32%;transform:skewX(-25deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.05),rgba(255,255,255,.32),rgba(255,255,255,.05),transparent);pointer-events:none;animation:amp-glint 8s ease-in-out 3;animation-fill-mode:forwards}
+@keyframes amp-glint{0%,88%{left:-65%;opacity:0}89%{opacity:1}98%{left:135%;opacity:1}100%{left:135%;opacity:0}}
+:root[data-theme="dark"] .nav .nav-cta{background:#d5a75a;color:#101a1e;border-color:#d5a75a}
+:root[data-theme="dark"] .nav .nav-cta::after{background:linear-gradient(90deg,transparent,rgba(255,255,255,.05),rgba(255,255,255,.48),transparent)}
+.amp-ribbon{padding:20px 16px;text-align:center;letter-spacing:.23em;font-size:clamp(10px,1.25vw,14px);font-weight:700;color:var(--ink);border-block:1px solid var(--line);background:repeating-linear-gradient(35deg,transparent 0 3px,rgba(128,108,72,.07) 3px 4px),repeating-linear-gradient(145deg,transparent 0 4px,rgba(128,108,72,.06) 4px 5px),var(--paper)}
+.amp-ribbon span{color:#a67a40;margin:0 .7em}
+@media(max-width:700px){.nav a{width:100%}.amp-ribbon{letter-spacing:.08em;padding:16px 8px}.amp-ribbon span{margin:0 .25em}}
+@media(prefers-reduced-motion:reduce){.nav .nav-cta::after{animation:none;display:none}}
