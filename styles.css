@@ -156,3 +156,77 @@ body{font-size:15px}
 .amp-ribbon span{color:#a67a40;margin:0 .7em}
 @media(max-width:700px){.nav a{width:100%}.amp-ribbon{letter-spacing:.08em;padding:16px 8px}.amp-ribbon span{margin:0 .25em}}
 @media(prefers-reduced-motion:reduce){.nav .nav-cta::after{animation:none;display:none}}
+
+
+/* Vintage Fender-inspired grille cloth and aged tweed controls — 2026-10-25.
+   Keep the woven texture in the Get Involved ribbon rather than behind body copy. */
+.amp-ribbon{
+  color:#f3dfb2;
+  text-shadow:0 1px 1px #140f0b;
+  padding:27px 14px;
+  border-top:3px solid #a17a45;
+  border-bottom:3px solid #a17a45;
+  box-shadow:inset 0 3px 9px #0008,inset 0 -3px 9px #0007;
+  background-color:#473c30;
+  background-image:
+    repeating-linear-gradient(0deg,rgba(225,202,158,.19) 0 1px,rgba(19,15,12,.28) 1px 3px,transparent 3px 6px),
+    repeating-linear-gradient(90deg,rgba(219,192,140,.23) 0 2px,rgba(20,16,12,.42) 2px 4px,transparent 4px 7px),
+    repeating-linear-gradient(45deg,transparent 0 6px,rgba(218,190,137,.10) 6px 7px,transparent 7px 13px);
+}
+.amp-ribbon span{color:#d7ac61;text-shadow:0 1px 2px #140f0b}
+.nav a,
+:root[data-theme="dark"] .nav a,
+:root[data-theme="light"] .nav a{
+  background:linear-gradient(155deg,#f2e3af,#dbc58b 58%,#c9aa6f);
+  color:#282319;
+  border:1px solid #947947;
+  box-shadow:inset 0 1px 0 #fff7d0,0 2px 3px #0002;
+  text-shadow:none;
+}
+.nav a:hover,
+:root[data-theme="dark"] .nav a:hover,
+:root[data-theme="light"] .nav a:hover{
+  background:linear-gradient(155deg,#fff0bd,#e8d19b 58%,#d6b77d);
+  color:#241d14;
+  border-color:#6e542b;
+}
+.nav a[aria-current="page"]:not(.nav-cta),
+:root[data-theme="dark"] .nav a[aria-current="page"]:not(.nav-cta),
+:root[data-theme="light"] .nav a[aria-current="page"]:not(.nav-cta){
+  background:linear-gradient(155deg,#ddc38a,#c4a367);
+  color:#201a10;
+  border-color:#75572b;
+  box-shadow:inset 0 2px 4px #49351e45;
+}
+.nav .nav-cta,
+:root[data-theme="dark"] .nav .nav-cta,
+:root[data-theme="light"] .nav .nav-cta{
+  background:linear-gradient(155deg,#f3e1ac,#d5b779 60%,#b99253);
+  color:#241d13;
+  border:1px solid #806037;
+  font-weight:800;
+}
+.nav .nav-cta:hover,
+:root[data-theme="dark"] .nav .nav-cta:hover,
+:root[data-theme="light"] .nav .nav-cta:hover{
+  background:linear-gradient(155deg,#fbe9b5,#e5c88b 60%,#cea968);
+  color:#241d13;
+}
+.nav .nav-cta::after,
+:root[data-theme="dark"] .nav .nav-cta::after{
+  background:linear-gradient(90deg,transparent,rgba(255,255,245,.04),rgba(255,255,245,.48),rgba(255,255,245,.04),transparent);
+}
+.button.primary,
+:root[data-theme="dark"] .button.primary{
+  background:linear-gradient(155deg,#f1dfaa,#d5b77a 60%,#bc985b);
+  color:#272116;
+  border:1px solid #927345;
+  border-radius:5px;
+  box-shadow:inset 0 1px 0 #fff4c7,0 2px 3px #0002;
+}
+.button.primary:hover,
+:root[data-theme="dark"] .button.primary:hover{
+  background:linear-gradient(155deg,#fff0bd,#e2c58a 60%,#cfa96a);
+  color:#272116;
+}
+@media(max-width:700px){.amp-ribbon{padding:20px 8px;line-height:1.9}}
