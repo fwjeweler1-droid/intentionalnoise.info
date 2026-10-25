@@ -230,3 +230,34 @@ body{font-size:15px}
   color:#272116;
 }
 @media(max-width:700px){.amp-ribbon{padding:20px 8px;line-height:1.9}}
+
+/* Complete the aged-tweed control finish across both themes. */
+.button,
+:root[data-theme="light"] .button,
+:root[data-theme="dark"] .button,
+.branded-orbit .orbit-action,
+:root[data-theme="light"] .branded-orbit .orbit-action,
+:root[data-theme="dark"] .branded-orbit .orbit-action{
+  background:linear-gradient(155deg,#f1dfaa,#d5b77a 60%,#bc985b)!important;
+  color:#272116!important;
+  border:1px solid #927345!important;
+  border-radius:5px!important;
+  box-shadow:inset 0 1px 0 #fff4c7,0 2px 3px #0002!important;
+  text-shadow:none!important;
+}
+.button:hover,.button:focus-visible,
+:root[data-theme="light"] .button:hover,
+:root[data-theme="dark"] .button:hover,
+.branded-orbit .orbit-action:hover,.branded-orbit .orbit-action:focus-visible,
+:root[data-theme="light"] .branded-orbit .orbit-action:hover,
+:root[data-theme="dark"] .branded-orbit .orbit-action:hover{
+  background:linear-gradient(155deg,#fff0bd,#e2c58a 60%,#cfa96a)!important;
+  color:#272116!important;
+}
+.nav .nav-cta[aria-current="page"],
+:root[data-theme="light"] .nav .nav-cta[aria-current="page"],
+:root[data-theme="dark"] .nav .nav-cta[aria-current="page"]{
+  background:linear-gradient(155deg,#ddc38a,#c4a367);
+  color:#201a10;border-color:#75572b;
+  box-shadow:inset 0 2px 4px #49351e45;
+}
