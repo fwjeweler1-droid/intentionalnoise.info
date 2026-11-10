@@ -261,3 +261,73 @@ body{font-size:15px}
   color:#201a10;border-color:#75572b;
   box-shadow:inset 0 2px 4px #49351e45;
 }
+
+
+/* 2026-11-10: Respect dark mode even with the approved aged-tweed theme.
+   Earlier shared styles forced bright gold controls in BOTH themes. */
+:root[data-theme="dark"] .nav a {
+  background:linear-gradient(155deg,#35423d,#293431 58%,#1d2929);
+  color:#f2e9d5;
+  border-color:#857451;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.11),0 2px 5px rgba(0,0,0,.35);
+  text-shadow:none;
+}
+:root[data-theme="dark"] .nav a:hover,
+:root[data-theme="dark"] .nav a:focus-visible {
+  background:linear-gradient(155deg,#45534b,#35433c 58%,#29352f);
+  color:#fff7e5;
+  border-color:#ccab6c;
+}
+:root[data-theme="dark"] .nav a[aria-current="page"]:not(.nav-cta) {
+  background:linear-gradient(155deg,#65523b,#483e31);
+  color:#fff3db;
+  border-color:#bd9b65;
+  box-shadow:inset 0 2px 4px rgba(0,0,0,.28);
+}
+:root[data-theme="dark"] .nav .nav-cta,
+:root[data-theme="dark"] .nav .nav-cta[aria-current="page"] {
+  background:linear-gradient(155deg,#62523a,#4b4030 60%,#393326);
+  color:#fff0d4;
+  border-color:#b49a66;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 2px 4px rgba(0,0,0,.3);
+}
+:root[data-theme="dark"] .nav .nav-cta:hover,
+:root[data-theme="dark"] .nav .nav-cta:focus-visible {
+  background:linear-gradient(155deg,#786448,#615038 60%,#4a3f30);
+  color:#fff6e8;
+}
+:root[data-theme="dark"] .nav .nav-cta::after {display:none}
+:root[data-theme="dark"] .button,
+:root[data-theme="dark"] .branded-orbit .orbit-action {
+  background:linear-gradient(155deg,#68593d,#50432f 60%,#3b3227)!important;
+  color:#fff2da!important;
+  border-color:#a58b5d!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.13),0 2px 4px rgba(0,0,0,.3)!important;
+}
+:root[data-theme="dark"] .button:hover,
+:root[data-theme="dark"] .button:focus-visible,
+:root[data-theme="dark"] .branded-orbit .orbit-action:hover,
+:root[data-theme="dark"] .branded-orbit .orbit-action:focus-visible {
+  background:linear-gradient(155deg,#816e4b,#63523a 60%,#4e4030)!important;
+  color:#fff8e8!important;
+}
+:root[data-theme="dark"] .theme-toggle {
+  background:#26352f;
+  color:#f5e8ce;
+  border-color:#8b7854;
+}
+:root[data-theme="dark"] .theme-toggle:hover {
+  background:#344239;
+  border-color:#d2ae73;
+}
+:root[data-theme="dark"] .theme-toggle:focus-visible,
+:root[data-theme="dark"] .nav a:focus-visible {
+  outline:3px solid #e9c57e;
+  outline-offset:3px;
+}
+:root[data-theme="dark"] .site-header {
+  background:#18282a;
+}
+:root[data-theme="dark"] .page-hero {
+  background:#17252a;
+}
