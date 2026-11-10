@@ -15,10 +15,29 @@ if (menuButton && nav) {
 const year = document.querySelector('#year');
 if (year) year.textContent = String(new Date().getFullYear());
 
+// State label tells visitors which mode is ON, not merely the opposite option.
 const themeButton=document.querySelector('.theme-toggle');
-function syncThemeButton(){if(!themeButton)return;const dark=document.documentElement.dataset.theme==='dark';themeButton.querySelector('.theme-symbol').textContent=dark?'☀':'☾';themeButton.querySelector('.theme-label').textContent=dark?'Light':'Dark';themeButton.setAttribute('aria-label',dark?'Switch to light theme':'Switch to dark theme');}
+function syncThemeButton(){
+  const dark=document.documentElement.dataset.theme==='dark';
+  if(themeButton){
+    const symbol=themeButton.querySelector('.theme-symbol');
+    const label=themeButton.querySelector('.theme-label');
+    if(symbol)symbol.textContent=dark?'☾':'☀';
+    if(label)label.textContent=dark?'Dark ON':'Light ON';
+    themeButton.setAttribute('aria-pressed',String(dark));
+    themeButton.setAttribute('aria-label',dark?'Dark mode is on. Switch to light mode':'Light mode is on. Switch to dark mode');
+    themeButton.title=dark?'Switch to light mode':'Switch to dark mode';
+  }
+  const themeColor=document.querySelector('meta[name="theme-color"]');
+  if(themeColor)themeColor.content=dark?'#18282a':'#f5f2eb';
+}
 syncThemeButton();
-if(themeButton)themeButton.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('in-theme',next)}catch(e){}syncThemeButton();});
+if(themeButton)themeButton.addEventListener('click',()=>{
+  const next=document.documentElement.dataset.theme==='dark'?'light':'dark';
+  document.documentElement.dataset.theme=next;
+  try{localStorage.setItem('in-theme',next)}catch(e){}
+  syncThemeButton();
+});
 
 // Configure a deployed backend URL here only after completing secure backend setup.
 const FORM_ENDPOINT = '';
