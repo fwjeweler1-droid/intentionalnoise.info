@@ -65,26 +65,43 @@ function firstLetters(name){const parts=String(name||'Artist').trim().split(/\s+
 function photo(p){
  const frame=el('div',null,'artwork');frame.setAttribute('role','img');frame.setAttribute('aria-label',p.display_name+' artwork or artist placeholder');
  frame.append(el('span',firstLetters(p.display_name),'initials'));
- const chosen=[p.logo_url,p.showcase_type==='image'?p.showcase_url:null];
- const candidates=[...new Set([...chosen,...(publishedArtwork.get(p.user_id)||[])].map(httpsImage).filter(Boolean))];
+ const extra=publishedArtwork.get(p.user_id)||{logos:[],artwork:[]};
+ const candidates=[...new Set([...extra.logos,p.logo_url,p.showcase_type==='image'?p.showcase_url:null,...extra.artwork].map(httpsImage).filter(Boolean))];
  if(!candidates.length)return frame;
- const img=el('img');img.alt=p.display_name+' published artwork';img.loading='lazy';img.referrerPolicy='no-referrer';let idx=0;
- img.onerror=()=>{if(idx<candidates.length){img.src=candidates[idx++]}else{img.remove()}};
+ const img=el('img');img.alt=p.display_name+' published artist image';img.loading='lazy';img.referrerPolicy='no-referrer';let idx=0;
+ img.onerror=()=>{if(idx<candidates.length)img.src=candidates[idx++];else img.remove()};
  frame.append(img);img.src=candidates[idx++];return frame;
 }
 async function loadArtwork(profiles){
  const ids=new Set(profiles.map(p=>p.user_id).filter(Boolean));if(!ids.size)return;
- const headers={apikey:KEY,Accept:'application/json'};
- async function readPublic(path){try{const r=await fetch('https://xyudcdgjyormlokwhfoi.supabase.co/rest/v1/'+path,{headers,cache:'no-store'});if(!r.ok)return [];const rows=await r.json();return Array.isArray(rows)?rows:[]}catch{return []}}
+ const root='https://xyudcdgjyormlokwhfoi.supabase.co',headers={apikey:KEY,Accept:'application/json'};
+ async function readPublic(path){try{const r=await fetch(root+'/rest/v1/'+path,{headers,cache:'no-store'});if(!r.ok)return [];const rows=await r.json();return Array.isArray(rows)?rows:[]}catch{return []}}
+ async function signedImage(path){
+  if(!path||!/^[-\w]+\/[\w./-]+$/.test(path))return null;
+  try{
+   const r=await fetch(root+'/storage/v1/object/sign/artist-review/'+path.split('/').map(encodeURIComponent).join('/'),{method:'POST',headers:{apikey:KEY,'Content-Type':'application/json'},body:JSON.stringify({expiresIn:600}),cache:'no-store'});
+   if(!r.ok)return null;const data=await r.json(),relative=data.signedURL||data.signedUrl;
+   if(typeof relative!=='string')return null;
+   return httpsImage(relative.startsWith('https://')?relative:root+'/storage/v1'+(relative.startsWith('/')?'':'/')+relative);
+  }catch{return null}
+ }
  const [uploads,releases]=await Promise.all([
-  readPublic('artist_media_submissions?select=user_id,kind,mime_type,public_url,external_url,created_at&status=eq.approved&rights_confirmed=eq.true&rules_accepted=eq.true&kind=eq.artwork&order=created_at.asc&limit=1000'),
+  readPublic('artist_media_submissions?select=user_id,kind,mime_type,public_url,external_url,source_type,storage_path,created_at&status=eq.approved&rights_confirmed=eq.true&rules_accepted=eq.true&kind=in.(logo,artwork)&order=created_at.asc&limit=1000'),
   readPublic('frog_releases?select=owner_id,image_url,created_at&is_published=eq.true&order=created_at.asc&limit=1000')
  ]);
- const byOwner=new Map();
- function add(id,url,at){if(!ids.has(id))return;const safe=httpsImage(url);if(!safe)return;const a=byOwner.get(id)||[];a.push({url:safe,time:Date.parse(at||'')||0});byOwner.set(id,a)}
- for(const item of uploads){if(item.mime_type&&!item.mime_type.startsWith('image/'))continue;add(item.user_id,item.public_url||item.external_url,item.created_at)}
- for(const item of releases)add(item.owner_id,item.image_url,item.created_at);
- for(const [id,entries] of byOwner)publishedArtwork.set(id,[...new Set(entries.sort((a,b)=>a.time-b.time).map(e=>e.url))]);
+ const entries=new Map();
+ function add(id,url,at,kind){if(!ids.has(id))return;const safe=httpsImage(url);if(!safe)return;const a=entries.get(id)||[];a.push({url:safe,time:Date.parse(at||'')||0,kind});entries.set(id,a)}
+ await Promise.all(uploads.map(async item=>{
+  if(item.mime_type&&!item.mime_type.startsWith('image/'))return;
+  const url=item.source_type==='upload'?await signedImage(item.storage_path):item.public_url||item.external_url;
+  add(item.user_id,url,item.created_at,item.kind);
+ }));
+ for(const item of releases)add(item.owner_id,item.image_url,item.created_at,'artwork');
+ for(const [id,rows] of entries){
+  const logos=rows.filter(v=>v.kind==='logo').sort((a,b)=>b.time-a.time).map(v=>v.url);
+  const artwork=rows.filter(v=>v.kind!=='logo').sort((a,b)=>a.time-b.time).map(v=>v.url);
+  publishedArtwork.set(id,{logos:[...new Set(logos)],artwork:[...new Set(artwork)]});
+ }
 }
 
 function detailLine(root,label,value){if(!value)return;const d=el('p',null,'field');d.append(el('strong',label+': '),document.createTextNode(value));root.append(d)}
