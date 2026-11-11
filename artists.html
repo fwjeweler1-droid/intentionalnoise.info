@@ -28,6 +28,14 @@ input{border:1px solid #7f9aa5;background:#0c202b;color:white;border-radius:9px;
 [hidden]{display:none!important}:focus-visible{outline:3px solid var(--mint);outline-offset:4px}
 @media(max-width:800px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.cards{grid-template-columns:1fr}main{padding:30px 0 50px}}
+
+/* Public artist cards: use approved profile art, then first publicly shared work art. */
+.artwork{position:relative;isolation:isolate;width:100%;aspect-ratio:16/10;overflow:hidden;border:1px solid var(--border);border-radius:12px;margin:0 0 15px;background:radial-gradient(circle at 70% 28%,#416d66 0%,#263b45 42%,#142735 100%);display:grid;place-items:center}
+.artwork::before{content:"";position:absolute;width:53%;aspect-ratio:1;border-radius:50%;border:4px solid #ffffff18;box-shadow:0 0 0 12px #ffffff09,0 0 0 24px #ffffff08,0 0 0 36px #ffffff06;right:4%;top:-8%;transform:rotate(-10deg)}
+.artwork .initials{position:relative;color:#e8faf0;font-size:clamp(2.3rem,4vw,4rem);font-weight:900;letter-spacing:-.05em;text-shadow:0 3px 10px #061e2888}
+.artwork img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.profile .artwork{max-width:400px;aspect-ratio:16/10;margin-bottom:18px}
+@media(max-width:560px){.artwork{aspect-ratio:16/9}}
 </style></head>
 <body><header><nav class="wrap"><a class="name" href="https://intentionalnoise.info/">Intentional Noise</a><div class="actions"><a href="https://intentionalnoise.info/">About the network</a><a href="https://ineedagig.net/">Bookings</a><a href="https://connect.intentionalnoise.info/auth.html?role=musician">Join as a musician</a></div></nav></header>
 <main class="wrap">
@@ -51,10 +59,37 @@ function setStatus(text){$('status').textContent=text}
 function link(text,url,cls='button alt'){const a=el('a',text,cls);a.href=url;return a}
 function artistUrl(p){return 'https://intentionalnoise.band/'+encodeURIComponent(p.slug)}
 function profileUrl(p){return location.pathname+'?slug='+encodeURIComponent(p.slug)}
-function photo(p){if(!p.logo_url||!/^https:\/\//i.test(p.logo_url))return null;const img=el('img');img.src=p.logo_url;img.referrerPolicy='no-referrer';img.alt=p.display_name+' artwork';img.loading='lazy';img.className='photo';img.onerror=()=>img.remove();return img}
+const publishedArtwork=new Map();
+function httpsImage(value){try{const u=new URL(value);return u.protocol==='https:'?u.href:null}catch{return null}}
+function firstLetters(name){const parts=String(name||'Artist').trim().split(/\s+/).filter(Boolean);return (parts.length>1?parts.slice(0,2).map(s=>s[0]).join(''):parts[0].slice(0,2)).toUpperCase()}
+function photo(p){
+ const frame=el('div',null,'artwork');frame.setAttribute('role','img');frame.setAttribute('aria-label',p.display_name+' artwork or artist placeholder');
+ frame.append(el('span',firstLetters(p.display_name),'initials'));
+ const chosen=[p.logo_url,p.showcase_type==='image'?p.showcase_url:null];
+ const candidates=[...new Set([...chosen,...(publishedArtwork.get(p.user_id)||[])].map(httpsImage).filter(Boolean))];
+ if(!candidates.length)return frame;
+ const img=el('img');img.alt=p.display_name+' published artwork';img.loading='lazy';img.referrerPolicy='no-referrer';let idx=0;
+ img.onerror=()=>{if(idx<candidates.length){img.src=candidates[idx++]}else{img.remove()}};
+ frame.append(img);img.src=candidates[idx++];return frame;
+}
+async function loadArtwork(profiles){
+ const ids=new Set(profiles.map(p=>p.user_id).filter(Boolean));if(!ids.size)return;
+ const headers={apikey:KEY,Accept:'application/json'};
+ async function readPublic(path){try{const r=await fetch('https://xyudcdgjyormlokwhfoi.supabase.co/rest/v1/'+path,{headers,cache:'no-store'});if(!r.ok)return [];const rows=await r.json();return Array.isArray(rows)?rows:[]}catch{return []}}
+ const [uploads,releases]=await Promise.all([
+  readPublic('artist_media_submissions?select=user_id,kind,mime_type,public_url,external_url,created_at&status=eq.approved&rights_confirmed=eq.true&rules_accepted=eq.true&kind=eq.artwork&order=created_at.asc&limit=1000'),
+  readPublic('frog_releases?select=owner_id,image_url,created_at&is_published=eq.true&order=created_at.asc&limit=1000')
+ ]);
+ const byOwner=new Map();
+ function add(id,url,at){if(!ids.has(id))return;const safe=httpsImage(url);if(!safe)return;const a=byOwner.get(id)||[];a.push({url:safe,time:Date.parse(at||'')||0});byOwner.set(id,a)}
+ for(const item of uploads){if(item.mime_type&&!item.mime_type.startsWith('image/'))continue;add(item.user_id,item.public_url||item.external_url,item.created_at)}
+ for(const item of releases)add(item.owner_id,item.image_url,item.created_at);
+ for(const [id,entries] of byOwner)publishedArtwork.set(id,[...new Set(entries.sort((a,b)=>a.time-b.time).map(e=>e.url))]);
+}
+
 function detailLine(root,label,value){if(!value)return;const d=el('p',null,'field');d.append(el('strong',label+': '),document.createTextNode(value));root.append(d)}
 function card(p){
- const box=el('article',null,'card');const img=photo(p);if(img)box.append(img);
+ const box=el('article',null,'card');box.append(photo(p));
  box.append(el('h2',p.display_name));
  if(p.available_for_gigs)box.append(el('span','Available for gigs','pill'));
  if(p.bio)box.append(el('p',p.bio.slice(0,180)));
@@ -65,7 +100,7 @@ function card(p){
 function showProfile(p){
  $('cards').hidden=true;$('filter').hidden=true;
  const root=$('profile');root.replaceChildren();
- const img=photo(p);if(img)root.append(img);
+ root.append(photo(p));
  root.append(el('h2',p.display_name));
  if(p.available_for_gigs)root.append(el('span','Available for gigs','pill'));
  detailLine(root,'About',p.bio);
@@ -86,12 +121,13 @@ async function load(){
  try{
   const slug=new URLSearchParams(location.search).get('slug');
   if(slug&&(!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)||slug.length>90)){setStatus('Artist page not available.');return}
-  const query=new URLSearchParams({select:'slug,display_name,bio,logo_url,roles,instruments,genres,available_for_gigs',published:'eq.true',approved_at:'not.is.null',order:'display_name.asc',limit:slug?'1':'100'});
+  const query=new URLSearchParams({select:'user_id,slug,display_name,bio,logo_url,showcase_url,showcase_type,roles,instruments,genres,available_for_gigs',published:'eq.true',approved_at:'not.is.null',order:'display_name.asc',limit:slug?'1':'100'});
   if(slug)query.set('slug','eq.'+slug);
   const res=await fetch(API+'?'+query.toString(),{headers:{apikey:KEY,Accept:'application/json'},cache:'no-store'});
   if(!res.ok)throw Error('Published directory unavailable ('+res.status+').');
   const data=await res.json();if(!Array.isArray(data))throw Error('Unexpected directory response.');
   artists=data;
+  await loadArtwork(data);
   if(slug){if(artists.length)showProfile(artists[0]);else setStatus('This artist page is private or not published.');return}
   render();
  }catch(error){setStatus('Could not load artist profiles: '+error.message)}
