@@ -149,7 +149,23 @@ async function load(){
   if(!res.ok)throw Error('Published directory unavailable ('+res.status+').');
   const data=await res.json();if(!Array.isArray(data))throw Error('Unexpected directory response.');
   artists=data;
-  try{const stores=await fetch('https://xyudcdgjyormlokwhfoi.supabase.co/rest/v1/artist_storefronts?select=user_id,cart_url,is_public&is_public=eq.true&limit=1000',{headers:{apikey:KEY,Accept:'application/json'},cache:'no-store'});if(stores.ok){const rows=await stores.json();shopByOwner=new Map((Array.isArray(rows)?rows:[]).filter(x=>x.is_public).map(x=>[x.user_id,x.cart_url]));}}catch{shopByOwner=new Map();}
+  shopByOwner=new Map();
+  try{
+    for(let i=0;i<artists.length;i+=100){
+      const stores=await fetch(new URL('rpc/list_published_artist_shops', API.replace(/artist_pages$/, '')),{
+        method:'POST',
+        headers:{apikey:KEY,Accept:'application/json','Content-Type':'application/json'},
+        body:JSON.stringify({p_artist_ids:artists.slice(i,i+100).map(artist=>artist.user_id)}),
+        cache:'no-store'
+      });
+      if(!stores.ok)throw Error('Storefront lookup unavailable');
+      const rows=await stores.json();
+      if(Array.isArray(rows))for(const shop of rows)shopByOwner.set(shop.user_id,shop.cart_url);
+    }
+  }catch{
+    // Fail closed if this optional endpoint is unavailable.
+    shopByOwner=new Map();
+  }
   try{const proof=await fetch('https://xyudcdgjyormlokwhfoi.supabase.co/rest/v1/verified_artist_accounts?select=user_id&limit=1000',{headers:{apikey:KEY,Accept:'application/json'},cache:'no-store'});if(proof.ok){const rows=await proof.json();verifiedArtistIds=new Set((Array.isArray(rows)?rows:[]).map(x=>x.user_id));}}catch{verifiedArtistIds=new Set();}
   await loadArtwork(data);
   if(slug){if(artists.length)showProfile(artists[0]);else setStatus('This artist page is private or not published.');return}
